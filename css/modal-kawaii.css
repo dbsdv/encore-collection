@@ -1,0 +1,350 @@
+/* アイカツ！アンコール：カード詳細モーダルのキュートデザイン
+   既存の css/style.css の後に読み込んでください。 */
+
+.modal-overlay {
+  padding: 16px;
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgb(255 255 255 / 24%) 0 3px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle at 82% 75%,
+      rgb(255 255 255 / 22%) 0 4px,
+      transparent 5px
+    ),
+    rgb(83 53 83 / 48%);
+  backdrop-filter: blur(5px);
+}
+
+.card-modal {
+  position: relative;
+  width: min(100%, 760px);
+  max-height: 92vh;
+  padding: 0;
+  overflow-x: hidden;
+  color: #69516f;
+  background: linear-gradient(145deg, #fffafd 0%, #fff1f8 58%, #f8f2ff 100%);
+  border: 2px solid #f5c4df;
+  border-radius: 26px;
+  box-shadow:
+    0 18px 55px rgb(92 53 92 / 25%),
+    inset 0 0 0 5px rgb(255 255 255 / 72%);
+}
+
+.modal-header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  min-height: 72px;
+  margin: 0;
+  padding: 16px 64px;
+  justify-content: center;
+  background: rgb(255 247 252 / 96%);
+  border-bottom: 1px solid #f4c8df;
+}
+
+.modal-header h2 {
+  color: #e34c98;
+  font-size: clamp(20px, 3vw, 25px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.modal-header h2::before {
+  content: "♡ ";
+  color: #f0a6cb;
+}
+
+.modal-header h2::after {
+  content: " ♡";
+  color: #f0a6cb;
+}
+
+.modal-close {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  width: 42px;
+  height: 42px;
+  border: 2px solid #fff;
+  outline: 1px solid #f0b4d4;
+  background: #ed6aaa;
+  color: #fff;
+  font-size: 27px;
+  line-height: 1;
+  box-shadow: 0 3px 9px rgb(210 92 154 / 20%);
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.modal-close:hover {
+  background: #dc4f94;
+  transform: rotate(8deg) scale(1.04);
+}
+
+.modal-card-number {
+  display: table;
+  margin: 18px auto 10px;
+  padding: 6px 15px;
+  color: #bd568d;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: #fff;
+  border: 1px solid #f2c3dd;
+  border-radius: 999px;
+}
+
+.modal-card-image-area {
+  gap: 10px;
+  margin: 12px 20px 22px;
+}
+
+.modal-card-viewer {
+  gap: 12px;
+}
+
+.modal-card-image-button {
+  max-width: 330px;
+  padding: 10px;
+  background: linear-gradient(145deg, #fff, #fff0f8);
+  border: 1px solid #f2c3dd;
+  border-radius: 20px;
+  box-shadow:
+    inset 0 0 0 4px rgb(255 255 255 / 80%),
+    0 5px 16px rgb(175 106 151 / 10%);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.modal-card-image-button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 0 0 4px rgb(255 255 255 / 80%),
+    0 8px 20px rgb(175 106 151 / 18%);
+}
+
+.modal-card-image {
+  max-height: 42vh;
+  border-radius: 10px;
+}
+
+.modal-card-nav-button {
+  flex: 0 0 38px;
+  width: 38px;
+  height: 44px;
+  color: #c05291;
+  background: #fff;
+  border: 1px solid #f0bdd9;
+  border-radius: 14px;
+  box-shadow: 0 3px 9px rgb(175 106 151 / 10%);
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.modal-card-nav-button:not(:disabled):hover {
+  background: #ffe7f3;
+  transform: scale(1.05);
+}
+
+.modal-card-image-hint {
+  color: #a17b9b;
+  font-size: 12px;
+}
+
+#card-detail-form {
+  padding: 0 24px 24px;
+}
+
+.detail-field {
+  margin: 0 0 12px;
+  padding: 12px 15px;
+  color: #986d91;
+  font-size: 12px;
+  font-weight: 800;
+  background: rgb(255 255 255 / 82%);
+  border: 1px solid #f2d0e3;
+  border-radius: 15px;
+}
+
+.detail-field p {
+  margin: 5px 0 0;
+  color: #634b6b;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* 情報を2列のカード風に並べる */
+#card-detail-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 12px;
+}
+
+#card-detail-form > .detail-field {
+  min-width: 0;
+}
+
+#card-detail-form > .trade-field {
+  grid-column: 1 / -1;
+  margin-top: 2px;
+  padding: 16px;
+  background: linear-gradient(135deg, #fff, #fff2f8);
+  border-color: #efbdd9;
+}
+
+.trade-field > span {
+  display: block;
+  margin-bottom: 12px;
+  color: #df5799;
+  font-size: 14px;
+}
+
+.trade-option {
+  width: fit-content;
+  margin: 8px 0 0;
+  padding: 9px 12px;
+  color: #765875;
+  background: #fff;
+  border: 1px solid #f3d4e5;
+  border-radius: 999px;
+}
+
+.trade-option input[type="checkbox"] {
+  accent-color: #e65b9e;
+  width: 17px;
+  height: 17px;
+}
+
+@media (max-width: 560px) {
+  .modal-overlay {
+    align-items: center;
+    padding: 8px;
+  }
+
+  .card-modal {
+    width: 100%;
+    max-height: 96vh;
+    border-radius: 20px;
+  }
+
+  .modal-header {
+    min-height: 62px;
+    padding: 13px 54px;
+  }
+
+  .modal-close {
+    top: 10px;
+    right: 10px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .modal-card-image-area {
+    margin: 12px 10px 18px;
+  }
+
+  .modal-card-viewer {
+    gap: 6px;
+  }
+
+  .modal-card-nav-button {
+    flex-basis: 30px;
+    width: 30px;
+    height: 40px;
+  }
+
+  .modal-card-image-button {
+    padding: 7px;
+    border-radius: 16px;
+  }
+
+  .modal-card-image {
+    max-height: 38vh;
+  }
+
+  #card-detail-form {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0 14px 16px;
+  }
+
+  #card-detail-form > .trade-field {
+    grid-column: auto;
+  }
+}
+
+/* レアリティ別の色：カード一覧と統一 */
+
+.modal-card-rarity.rarity-er {
+  background: #fff0c2;
+  color: #9b6b00;
+}
+
+.modal-card-rarity.rarity-pr {
+  background: #fce0ef;
+  color: #c04483;
+}
+
+.modal-card-rarity.rarity-r {
+  background: #e1edff;
+  color: #426db5;
+}
+
+.modal-card-rarity.rarity-n {
+  background: #eeeeee;
+  color: #777777;
+}
+
+.modal-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  margin: 18px auto;
+}
+
+.modal-card-number {
+  margin: 0;
+}
+
+.modal-card-rarity {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 7px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: bold;
+  background: #fce0ef;
+  color: #c04483;
+}
+
+.modal-card-rarity.rarity-er {
+  background: #fff0c2;
+  color: #9b6b00;
+}
+
+.modal-card-rarity.rarity-pr {
+  background: #fce0ef;
+  color: #c04483;
+}
+
+.modal-card-rarity.rarity-r {
+  background: #e1edff;
+  color: #426db5;
+}
+
+.modal-card-rarity.rarity-n {
+  background: #eeeeee;
+  color: #777777;
+}

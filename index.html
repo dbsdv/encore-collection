@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <link rel="icon" type="image/png" href="icons/aikatsu-icon.png" />
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>アイカツ！アンコール カードコレクション</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/modal-kawaii.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>アイカツ！アンコール</h1>
+      <p>MY CARD COLLECTION ♡</p>
+    </header>
+
+    <main>
+      <section class="summary">
+        <div class="summary-item">
+          <span class="summary-label">カード種類数</span>
+          <span class="summary-value" id="total-count">0</span>
+        </div>
+
+        <div class="summary-item">
+          <span class="summary-label">所持カード</span>
+          <span class="summary-value" id="owned-count">0</span>
+        </div>
+
+        <div class="summary-item">
+          <span class="summary-label">コンプリート率</span>
+          <span class="summary-value" id="completion-rate">0%</span>
+        </div>
+      </section>
+
+      <!-- 表示切り替え -->
+      <nav class="view-tabs" aria-label="表示切り替え">
+        <button type="button" id="collection-tab" class="view-tab active">
+          カード一覧
+        </button>
+
+        <button type="button" id="trade-tab" class="view-tab">トレード</button>
+
+        <button type="button" id="settings-tab" class="view-tab">設定 ⚙</button>
+      </nav>
+
+      <details id="filter-details" class="filter-details">
+        <summary>🔎 検索・絞り込み</summary>
+
+        <section class="toolbar">
+          <input id="search" type="search" placeholder="カード番号で検索" />
+
+          <select id="rarity-filter">
+            <option value="">すべてのレアリティ</option>
+            <option value="ER">アンコールレア</option>
+            <option value="PR">プレミアムレア</option>
+            <option value="R">レア</option>
+            <option value="N">ノーマル</option>
+          </select>
+
+          <select id="type-filter">
+            <option value="">すべてのタイプ</option>
+            <option value="キュート">キュート</option>
+            <option value="クール">クール</option>
+            <option value="セクシー">セクシー</option>
+            <option value="ポップ">ポップ</option>
+          </select>
+
+          <select id="brand-filter">
+            <option value="">すべてのブランド</option>
+          </select>
+
+          <select id="category-filter">
+            <option value="">すべてのカテゴリ</option>
+            <option value="トップス">トップス</option>
+            <option value="ボトムス">ボトムス</option>
+            <option value="シューズ">シューズ</option>
+            <option value="アクセサリー">アクセサリー</option>
+          </select>
+
+          <select id="series-filter">
+            <option value="">すべての弾数</option>
+          </select>
+        </section>
+      </details>
+
+      <section class="card-grid" id="card-grid">
+        <p class="empty-message">カードを読み込み中…</p>
+      </section>
+
+      <!-- トレード画面 -->
+      <section id="trade-view" class="trade-view" hidden>
+        <div class="trade-export-actions">
+          <button type="button" id="export-wanted-image">♡ 求 ♡</button>
+
+          <button type="button" id="export-out-image">✧ 譲 ✧</button>
+
+          <button type="button" id="export-trade-image">♡ 求・譲 ♡</button>
+        </div>
+
+        <div id="trade-image-preview" hidden>
+          <div class="trade-preview-header">
+            <p>画像を長押しして保存してね ♡</p>
+
+            <button
+              type="button"
+              id="close-trade-preview"
+              aria-label="画像を閉じる"
+            >
+              ×
+            </button>
+          </div>
+
+          <img id="trade-preview-image" alt="トレード募集画像" />
+        </div>
+
+        <div id="trade-image-area">
+          <!-- 求：欲しいカード -->
+          <section class="trade-section trade-wanted-section">
+            <div class="trade-section-header">
+              <img class="trade-badge" src="icons/trade-wanted.png" alt="求" />
+            </div>
+
+            <div id="trade-wanted-grid" class="card-grid trade-grid"></div>
+          </section>
+
+          <!-- 譲：交換に出せるカード -->
+          <section class="trade-section trade-out-section">
+            <div class="trade-section-header">
+              <img class="trade-badge" src="icons/trade-out.png" alt="譲" />
+            </div>
+
+            <div id="trade-out-grid" class="card-grid trade-grid"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- カード詳細モーダル -->
+    <div class="modal-overlay" id="card-modal" hidden>
+      <section
+        class="card-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <div class="modal-header">
+          <h2 id="modal-title">カード詳細</h2>
+          <button type="button" id="modal-close" class="modal-close">×</button>
+        </div>
+
+        <div class="modal-card-meta">
+          <p class="modal-card-number" id="modal-card-number"></p>
+          <span class="modal-card-rarity" id="modal-card-rarity"></span>
+        </div>
+
+        <div class="modal-card-image-area">
+          <div class="modal-card-viewer">
+            <button
+              type="button"
+              id="modal-prev-card"
+              class="modal-card-nav-button"
+              aria-label="前のカード"
+            >
+              ←
+            </button>
+
+            <button
+              type="button"
+              id="modal-card-image-button"
+              class="modal-card-image-button"
+              aria-label="カードの裏面を見る"
+            >
+              <img
+                id="modal-card-image"
+                class="modal-card-image"
+                src=""
+                alt="カード画像"
+              />
+            </button>
+
+            <button
+              type="button"
+              id="modal-next-card"
+              class="modal-card-nav-button"
+              aria-label="次のカード"
+            >
+              →
+            </button>
+          </div>
+
+          <p class="modal-card-image-hint">
+            画像をタップすると表裏が切り替わります
+          </p>
+        </div>
+
+        <form id="card-detail-form">
+          <div class="detail-field">
+            弾数
+            <p id="detail-series"></p>
+          </div>
+
+          <div class="detail-field">
+            AP
+            <p id="detail-ap"></p>
+          </div>
+
+          <label class="detail-field">
+            カード名
+            <p id="detail-name"></p>
+          </label>
+
+          <div id="detail-acquisition" class="detail-field" hidden>
+            入手方法
+            <p id="detail-acquisition-text"></p>
+          </div>
+
+          <div class="detail-field">
+            タイプ
+            <p id="detail-type"></p>
+          </div>
+
+          <div class="detail-field">
+            カテゴリ
+            <p id="detail-category"></p>
+          </div>
+
+          <div class="detail-field">
+            ブランド
+            <p id="detail-brand"></p>
+          </div>
+
+          <!-- トレード設定 -->
+          <div class="detail-field trade-field">
+            <span>トレード</span>
+
+            <label class="trade-option">
+              <input type="checkbox" id="trade-wanted" />
+              欲しいカード
+            </label>
+
+            <label class="trade-option">
+              <input type="checkbox" id="trade-out" />
+              交換に出すカード
+            </label>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <!-- 設定画面 -->
+    <section id="settings-view" class="settings-view" hidden>
+      <h2>設定 ⚙</h2>
+
+      <section class="settings-section">
+        <h3>バックアップ</h3>
+        <p>所持枚数・カード詳細・トレード設定を保存します。</p>
+
+        <button type="button" id="backup-button">♡ バックアップを保存</button>
+      </section>
+
+      <section class="settings-section">
+        <h3>データの復元</h3>
+        <p>バックアップファイルから保存データを復元します。</p>
+
+        <label for="restore-file">バックアップファイル</label>
+        <input type="file" id="restore-file" accept=".json,application/json" />
+
+        <button type="button" id="restore-button">♡ データを復元</button>
+      </section>
+
+      <section class="settings-section">
+        <h3>データの初期化</h3>
+        <p>
+          所持枚数・カード詳細・トレード設定を削除します。
+          カード一覧や画像データは削除されません。
+        </p>
+
+        <button type="button" id="reset-button">データを初期化</button>
+      </section>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
