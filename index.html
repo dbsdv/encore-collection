@@ -7,6 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>アイカツ！アンコール カードコレクション</title>
     <link rel="apple-touch-icon" href="icons/aikatsu-icon.png" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Playwrite+Canada+Guides&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/modal-kawaii.css" />
   </head>
@@ -14,13 +20,13 @@
   <body>
     <header>
       <h1>アイカツ！アンコール</h1>
-      <p>MY CARD COLLECTION ♡</p>
+      <p>♡ MY CARD COLLECTION ♡</p>
     </header>
 
     <main>
       <section class="summary">
         <div class="summary-item">
-          <span class="summary-label">カード種類数</span>
+          <span class="summary-label">カード総数</span>
           <span class="summary-value" id="total-count">0</span>
         </div>
 
@@ -38,12 +44,16 @@
       <!-- 表示切り替え -->
       <nav class="view-tabs" aria-label="表示切り替え">
         <button type="button" id="collection-tab" class="view-tab active">
-          カード一覧
+          <img src="icons/tab-card-active.png" alt="カード一覧" />
         </button>
 
-        <button type="button" id="trade-tab" class="view-tab">トレード</button>
+        <button type="button" id="trade-tab" class="view-tab">
+          <img src="icons/tab-trade.png" alt="トレード" />
+        </button>
 
-        <button type="button" id="settings-tab" class="view-tab">設定 ⚙</button>
+        <button type="button" id="settings-tab" class="view-tab">
+          <img src="icons/tab-settings.png" alt="設定" />
+        </button>
       </nav>
 
       <details id="filter-details" class="filter-details">

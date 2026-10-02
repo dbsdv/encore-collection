@@ -18,12 +18,28 @@ header {
 
 header h1 {
   margin: 0;
-  font-size: 24px;
+  font-family: "Hachi Maru Pop", cursive;
+  font-size: 32px;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: 0.03em;
+  text-shadow:
+    2px 0 0 #d96d9b,
+    -2px 0 0 #d96d9b,
+    0 2px 0 #d96d9b,
+    0 -2px 0 #d96d9b,
+    1px 1px 0 #d96d9b,
+    -1px -1px 0 #d96d9b,
+    1px -1px 0 #d96d9b,
+    -1px 1px 0 #d96d9b;
 }
 
 header p {
   margin: 8px 0 0;
-  font-size: 13px;
+  font-family: "Hachi Maru Pop", cursive;
+  font-size: 12px;
+  font-weight: 400;
+  color: #d96d9b;
 }
 
 main {
@@ -51,11 +67,13 @@ main {
   margin-bottom: 8px;
   color: #9b788b;
   font-size: 12px;
+  font-family: "Hachi Maru Pop", cursive;
 }
 
 .summary-value {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: bold;
+  font-family: "Hachi Maru Pop", cursive;
   color: #d66d9e;
 }
 
@@ -76,7 +94,8 @@ main {
   border-radius: 10px;
   background: #fff;
   color: #55434e;
-  font: inherit;
+  font-family: "Hachi Maru Pop", cursive;
+  font-size: 15px;
 }
 
 .toolbar input {
@@ -154,7 +173,7 @@ main {
 
 @media (max-width: 480px) {
   header h1 {
-    font-size: 19px;
+    font-size: 28px;
   }
 
   main {
@@ -497,26 +516,29 @@ main {
 
 .view-tabs {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
   margin-bottom: 16px;
 }
 
 .view-tab {
   flex: 1;
-  padding: 10px 16px;
-  border: 1px solid #e4b7cf;
-  border-radius: 10px;
-  background: #fff;
-  color: #9b6480;
-  font: inherit;
+  padding: 0;
+  border: none;
+  background: none;
   cursor: pointer;
 }
 
-.view-tab.active {
-  background: #e9b9d0;
-  border-color: #e9b9d0;
-  color: #fff;
-  font-weight: bold;
+.view-tab img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.view-tab:focus-visible {
+  outline: 2px solid #e9b9d0;
+  outline-offset: 3px;
 }
 
 /* hidden属性の要素を確実に非表示にする */
@@ -670,45 +692,46 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 22px;
-
-  border: 1px solid #e9a8c6;
+  padding: 10px 20px;
+  border: 1px solid #e7b5ce;
   border-radius: 999px;
-
-  background: linear-gradient(135deg, #f8c9dd, #eeb2ce);
-  color: #9e5279;
-
-  font-family: inherit;
+  background: #fff7fb;
+  color: #b65f88;
+  font-family: "Hachi Maru Pop", cursive;
   font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-
-  box-shadow: 0 3px 8px rgba(198, 112, 155, 0.12);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 6px rgba(198, 112, 155, 0.08);
   cursor: pointer;
-
   transition:
     background 0.2s ease,
     box-shadow 0.2s ease,
     transform 0.2s ease;
 }
 
+#export-wanted-image:hover:not(:disabled),
+#export-out-image:hover:not(:disabled),
 #export-trade-image:hover:not(:disabled) {
-  background: linear-gradient(135deg, #fbd6e5, #f3bfd7);
-  box-shadow: 0 5px 12px rgba(198, 112, 155, 0.2);
-  transform: translateY(-2px);
+  background: #fceaf3;
+  box-shadow: 0 4px 10px rgba(198, 112, 155, 0.14);
+  transform: translateY(-1px);
 }
 
+#export-wanted-image:active:not(:disabled),
+#export-out-image:active:not(:disabled),
 #export-trade-image:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 2px 5px rgba(198, 112, 155, 0.12);
 }
 
+#export-wanted-image:focus-visible,
+#export-out-image:focus-visible,
 #export-trade-image:focus-visible {
   outline: 2px solid #d66d9e;
   outline-offset: 3px;
 }
 
+#export-wanted-image:disabled,
+#export-out-image:disabled,
 #export-trade-image:disabled {
   opacity: 0.65;
   cursor: wait;
@@ -1092,4 +1115,12 @@ main {
 
 .card-number {
   white-space: nowrap;
+}
+
+header {
+  background-color: #fff0f6;
+  background-image:
+    linear-gradient(0deg, rgba(238, 154, 190, 0.28) 50%, transparent 50%),
+    linear-gradient(90deg, rgba(238, 154, 190, 0.28) 50%, transparent 50%);
+  background-size: 24px 24px;
 }

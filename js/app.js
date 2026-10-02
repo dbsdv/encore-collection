@@ -187,6 +187,18 @@ function switchView(view) {
   tradeTab.classList.toggle("active", isTradeView);
   settingsTab.classList.toggle("active", isSettingsView);
 
+  collectionTab.querySelector("img").src = isCollectionView
+    ? "icons/tab-card-active.png"
+    : "icons/tab-card.png";
+
+  tradeTab.querySelector("img").src = isTradeView
+    ? "icons/tab-trade-active.png"
+    : "icons/tab-trade.png";
+
+  settingsTab.querySelector("img").src = isSettingsView
+    ? "icons/tab-settings-active.png"
+    : "icons/tab-settings.png";
+
   if (isTradeView) {
     renderTradeCards();
   }

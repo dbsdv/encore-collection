@@ -44,8 +44,8 @@ export function initCardList({ getCards, openCardModal, onOwnedChange }) {
 
     const rate = total === 0 ? 0 : Math.round((ownedTypes / total) * 100);
 
-    totalCount.textContent = total;
-    ownedCount.textContent = ownedTotal;
+    totalCount.textContent = `${total}枚`;
+    ownedCount.textContent = `${ownedTotal}枚`;
     completionRate.textContent = `${rate}%`;
   }
 
