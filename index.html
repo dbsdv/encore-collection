@@ -18,6 +18,15 @@
   </head>
 
   <body>
+    <button
+      type="button"
+      id="top-home-button"
+      class="top-home-button"
+      aria-label="ホームへ戻る"
+    >
+      <img src="icons/top-heart.png" alt="TOP" />
+    </button>
+
     <header>
       <h1>アイカツ！アンコール</h1>
       <p>♡ MY CARD COLLECTION ♡</p>
@@ -56,10 +65,11 @@
         </button>
       </nav>
 
-      <details id="filter-details" class="filter-details">
-        <summary>🔎 検索・絞り込み</summary>
+      <div class="filter-top-row">
+        <details id="filter-details" class="filter-details">
+          <summary>🔎 検索・絞り込み</summary>
 
-        <section class="toolbar">
+          <section class="toolbar">
           <input id="search" type="search" placeholder="カード番号で検索" />
 
           <select id="rarity-filter">
@@ -89,12 +99,13 @@
             <option value="シューズ">シューズ</option>
             <option value="アクセサリー">アクセサリー</option>
           </select>
-
-          <select id="series-filter">
-            <option value="">すべての弾数</option>
-          </select>
         </section>
-      </details>
+        </details>
+
+        <select id="series-filter" class="series-filter-top" aria-label="段数を選択">
+          <option value="">すべての弾数</option>
+        </select>
+      </div>
 
       <section class="card-grid" id="card-grid">
         <p class="empty-message">カードを読み込み中…</p>
@@ -174,7 +185,7 @@
               class="modal-card-nav-button"
               aria-label="前のカード"
             >
-              ←
+              <img src="icons/heart-left.png" alt="" aria-hidden="true" />
             </button>
 
             <button
@@ -197,7 +208,7 @@
               class="modal-card-nav-button"
               aria-label="次のカード"
             >
-              →
+              <img src="icons/heart-right.png" alt="" aria-hidden="true" />
             </button>
           </div>
 
@@ -262,7 +273,6 @@
 
     <!-- 設定画面 -->
     <section id="settings-view" class="settings-view" hidden>
-      <h2>設定 ⚙</h2>
 
       <section class="settings-section">
         <h3>バックアップ</h3>

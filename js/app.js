@@ -30,11 +30,12 @@ const tradeWantedGrid = document.getElementById("trade-wanted-grid");
 const tradeOutGrid = document.getElementById("trade-out-grid");
 
 const filterDetails = document.getElementById("filter-details");
+const filterTopRow = document.querySelector(".filter-top-row");
 
 let cards = [];
 
 // カード詳細モーダルを初期化
-const { openCardModal } = initCardModal({
+const { openCardModal, closeCardModal } = initCardModal({
   onSaved: () => {
     loadCards();
   },
@@ -178,7 +179,7 @@ function switchView(view) {
   const isSettingsView = view === "settings";
 
   toolbar.hidden = !isCollectionView;
-  filterDetails.hidden = !isCollectionView;
+  filterTopRow.hidden = !isCollectionView;
   cardGrid.hidden = !isCollectionView;
   tradeView.hidden = !isTradeView;
   settingsView.hidden = !isSettingsView;
@@ -214,6 +215,15 @@ tradeTab.addEventListener("click", () => {
 
 settingsTab.addEventListener("click", () => {
   switchView("settings");
+});
+
+// どの画面からでもホーム（カード一覧）へ戻る
+const topHomeButton = document.getElementById("top-home-button");
+
+topHomeButton.addEventListener("click", () => {
+  closeCardModal();
+  switchView("collection");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 // カードデータを読み込む

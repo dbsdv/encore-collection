@@ -174,8 +174,15 @@ export function initCardList({ getCards, openCardModal, onOwnedChange }) {
       const ownedControl = document.createElement("div");
       ownedControl.className = "owned-control";
 
-      const ownedLabel = document.createElement("label");
-      ownedLabel.textContent = "所持数";
+      const decrementButton = document.createElement("button");
+      decrementButton.type = "button";
+      decrementButton.className = "owned-step-button";
+      decrementButton.setAttribute(
+        "aria-label",
+        `${card.cardNumber || "カード"}の所持枚数を1枚減らす`,
+      );
+      decrementButton.innerHTML =
+        '<img src="icons/heart-left.png" alt="" aria-hidden="true" />';
 
       const ownedInput = document.createElement("input");
       ownedInput.type = "number";
@@ -187,33 +194,51 @@ export function initCardList({ getCards, openCardModal, onOwnedChange }) {
         `${card.cardNumber || "カード"}の所持枚数`,
       );
 
-      ownedInput.addEventListener("change", () => {
-        const value = Math.max(0, Math.floor(Number(ownedInput.value) || 0));
+      const incrementButton = document.createElement("button");
+      incrementButton.type = "button";
+      incrementButton.className = "owned-step-button";
+      incrementButton.setAttribute(
+        "aria-label",
+        `${card.cardNumber || "カード"}の所持枚数を1枚増やす`,
+      );
+      incrementButton.innerHTML =
+        '<img src="icons/heart-right.png" alt="" aria-hidden="true" />';
 
-        card.ownedCount = value;
-        ownedInput.value = value;
+      function updateOwnedCount(value) {
+        const nextValue = Math.max(0, Math.floor(Number(value) || 0));
 
-        // 所持数に合わせてチェック状態を更新
-        ownedCheck.checked = value > 0;
+        card.ownedCount = nextValue;
+        ownedInput.value = nextValue;
 
-        // 所持数が1枚以上なら白黒表示
-        image.classList.toggle("is-owned", value > 0);
+        // 所持数に合わせてチェック状態と画像表示を更新
+        ownedCheck.checked = nextValue > 0;
+        image.classList.toggle("is-owned", nextValue > 0);
 
         onOwnedChange();
+      }
+
+      decrementButton.addEventListener("click", () => {
+        updateOwnedCount(Number(card.ownedCount) - 1);
+      });
+
+      incrementButton.addEventListener("click", () => {
+        updateOwnedCount(Number(card.ownedCount) + 1);
+      });
+
+      ownedInput.addEventListener("change", () => {
+        updateOwnedCount(ownedInput.value);
       });
 
       // チェックで所持枚数を切り替える
       ownedCheck.addEventListener("change", () => {
-        const value = ownedCheck.checked ? 1 : 0;
-
-        card.ownedCount = value;
-        ownedInput.value = value;
-
-        onOwnedChange();
-        image.classList.toggle("is-owned", value > 0);
+        updateOwnedCount(ownedCheck.checked ? 1 : 0);
       });
 
-      ownedControl.append(ownedLabel, ownedInput);
+      ownedControl.append(
+        decrementButton,
+        ownedInput,
+        incrementButton,
+      );
 
       // チェック・カード番号・レアリティを横並びにする
       const cardMeta = document.createElement("div");
